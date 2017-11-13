@@ -1,0 +1,55 @@
+﻿<Window x:Class="Lexer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lexer"
+        xmlns:command="clr-namespace:Lexer.Commands"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding x:Name="SaveCommands" Command="command:SaveCommands.Requery" Executed="SaveCommands_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="203*"/>
+            <RowDefinition Height="81*"/>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="163*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="button" Content=">" Grid.Column="2" Grid.Row="3" Margin="4" Click="button_Click" FontSize="24"/>
+        <avalonEdit:TextEditor Name="textEditor" FontFamily="Courier New" FontSize="16" Margin="4" Grid.Column="1" Grid.Row="2" Grid.RowSpan="4" BorderThickness="2" BorderBrush="#FF828790" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" ShowLineNumbers="True" LineNumbersForeground="#FF4FA4BC" Drop="textEditor_Drop" AllowDrop="True"/>
+        <DataGrid x:Name="ErrorDataGrid" Grid.Column="3" Margin="4" Grid.Row="5" FontSize="16" SelectionChanged="ErrorDataGrid_SelectionChanged" VerticalGridLinesBrush="Transparent" HorizontalGridLinesBrush="#FF688CAF" AutoGenerateColumns="False" GotFocus="ErrorDataGrid_GotFocus" CanUserAddRows="False" LostFocus="ErrorDataGrid_LostFocus" BorderThickness="2" BorderBrush="#FFFF3333" Background="#19FF3333">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="列" Binding="{Binding line}" IsReadOnly="True" FontSize="16" Width="1*"/>
+                <DataGridTextColumn Header="说明"  Binding="{Binding infomation}" IsReadOnly="True" FontSize="16" Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="TokenDataGrid" Grid.Column="3" Margin="4" Grid.Row="1" Grid.RowSpan="4" FontSize="16" SelectionChanged="TokenDataGrid_SelectionChanged" VerticalGridLinesBrush="Transparent" HorizontalGridLinesBrush="#FF688CAF" AutoGenerateColumns="False" GotFocus="TokenDataGrid_GotFocus"  CanUserAddRows="False" LostFocus="TokenDataGrid_LostFocus"  BorderThickness="2" Background="#19228B22" BorderBrush="ForestGreen">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="类型" Binding="{Binding kind}" IsReadOnly="True" FontSize="16" Width="1*" />
+                <DataGridTextColumn Header="值"  Binding="{Binding value}" IsReadOnly="True" FontSize="16" Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Menu x:Name="menu" Margin="4,4,4,0" Grid.Column="1" Background="#FFF0F0F0" Grid.Row="1" >
+            <MenuItem Header="文件" FontSize="14" Padding="8,1">
+                <MenuItem Header="保存源代码" Command="command:SaveCommands.Requery" CommandParameter="source"/>
+                <MenuItem Header="保存分析结果" Command="command:SaveCommands.Requery" CommandParameter="result"/>
+                <MenuItem Header="导入" Command="Open"/>
+            </MenuItem>
+            <MenuItem Header="设置" FontSize="14" Padding="8,1" Command="Properties">
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Window>
